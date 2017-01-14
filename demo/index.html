@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
+
+    <title>cd-multistate-radio demo</title>
+
+    <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+
+    <link rel="import" href="../../iron-demo-helpers/demo-pages-shared-styles.html">
+    <link rel="import" href="../../iron-demo-helpers/demo-snippet.html">
+    <link rel="import" href="../cd-multistate-radio.html">
+
+    <style is="custom-style" include="demo-pages-shared-styles">
+
+    </style>
+  </head>
+  <body>
+    <div class="vertical-section-container centered">
+      <h3>Basic cd-multistate-radio demo</h3>
+      <demo-snippet>
+        <template>
+          <cd-multistate-radio id="radio1" options='["red", "orange", "green"]'></cd-multistate-radio>
+          <span id="value1"></span>
+
+          <script>
+              window.addEventListener('WebComponentsReady', function(e) {
+                  document.querySelector('#radio1').addEventListener('change', function(e) {
+                      document.querySelector('#value1').innerHTML = e.detail.value;
+                  });
+              });
+          </script>
+        </template>
+      </demo-snippet>
+
+      <h3>Change colors</h3>
+      <demo-snippet>
+        <template>
+          <style is="custom-style" include="demo-pages-shared-styles">
+            cd-multistate-radio {
+              --cd-multistate-radio-button-checked-color: blue;
+              --cd-multistate-radio-button-checked-ink-color: blue;
+            }
+            cd-multistate-radio.red {
+              --cd-multistate-radio-button-checked-color: red;
+              --cd-multistate-radio-button-checked-ink-color: red;
+            }
+
+            cd-multistate-radio.orange {
+              --cd-multistate-radio-button-checked-color: orange;
+              --cd-multistate-radio-button-checked-ink-color: orange;
+            }
+
+            cd-multistate-radio.green {
+              --cd-multistate-radio-button-checked-color: green;
+              --cd-multistate-radio-button-checked-ink-color: green;
+            }
+
+          </style>
+
+          <cd-multistate-radio id="radio2" options='["red", "orange", "green"]'></cd-multistate-radio>
+          <span id="value2"></span>
+
+          <script>
+              window.addEventListener('WebComponentsReady', function(e) {
+                  document.querySelector('#radio2').addEventListener('change', function(e) {
+                      this.className = '';
+                      this.classList.add(e.detail.value);
+                      this.updateStyles();
+
+                      document.querySelector('#value2').innerHTML = e.detail.value;
+                  });
+              });
+          </script>
+        </template>
+      </demo-snippet>
+    </div>
+
+
+  </body>
+</html>

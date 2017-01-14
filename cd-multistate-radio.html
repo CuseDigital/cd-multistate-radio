@@ -1,0 +1,80 @@
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../paper-radio-button/paper-radio-button.html">
+
+<!--
+`cd-multistate-radio`
+A paper-radio-button wrapper which can cycle through multiple states.
+
+@demo demo/index.html 
+-->
+
+<dom-module id="cd-multistate-radio">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+
+      paper-radio-button {
+        --paper-radio-button-checked-color: var(--cd-multistate-radio-button-checked-color);
+        --paper-radio-button-checked-ink-color: var(--cd-multistate-radio-button-checked-ink-color);
+      }
+    </style>
+    <paper-radio-button id="radio" on-tap="_handleTap"></paper-radio-button>
+  </template>
+
+  <script>
+    Polymer({
+
+      is: 'cd-multistate-radio',
+
+      properties: {
+        prop1: {
+          type: String,
+          value: 'cd-multistate-radio',
+        },
+          options: {
+            type: Array,
+              value: []
+          },
+          pointer: {
+            type: Number,
+              value: null,
+              observer: '_pointerChanged'
+          },
+          value: {
+            type: String, value: null
+          }
+      },
+
+        ready: function() {
+          this.$.radio.addEventListener('change', function(e) {
+              e.stopPropagation();
+          });
+        },
+
+        _pointerChanged: function(e) {
+            this.value = this.options[this.pointer];
+            this.fire('change', {value: this.value});
+        },
+
+      _handleTap: function(e) {
+          this.$.radio.checked = true;
+
+          if (this.pointer == null) {
+            this.pointer = 0;
+          } else {
+
+              this.pointer += 1;
+
+              if (this.pointer >= this.options.length) {
+                  this.pointer = 0;
+              }
+          }
+      }
+
+      // TODO: Handle setting value via API
+
+    });
+  </script>
+</dom-module>
